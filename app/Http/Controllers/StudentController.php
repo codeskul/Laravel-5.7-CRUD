@@ -39,7 +39,7 @@ class StudentController extends Controller
         $request->validate([
             'full_name' => 'required|max:255',
             'address' => 'required|max:255',
-            'contact_no' => 'required|numeric|min:10',
+            'contact_no' => 'required|regex:/\d{10} ?/',
         ]);
         $student = new student();
         $student->full_name = $request->full_name;
