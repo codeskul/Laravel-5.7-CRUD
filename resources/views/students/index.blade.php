@@ -23,10 +23,12 @@
                 <td>{{$student->full_name}}</td>
                 <td>{{$student->address}}</td>
                 <td>{{$student->contact_no}}</td>
+                <td></td>
+                <td></td>
             </tr>
             @endforeach
         </tbody>
     </table>
-    {{$students}}
+
 </div>
 @endsection
