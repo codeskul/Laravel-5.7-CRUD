@@ -3,7 +3,7 @@
 @section('content')
 <br><br><br>
 <h2>Students : List</h2>
-<br><br><a href="{{route('create')}}"><button type="button" class="btn btn-primary">Create</button></a><br><br>
+<br><br><a href="{{route('students.create')}}"><button type="button" class="btn btn-primary">Create</button></a><br><br>
 <div class="table-responsive">
     <table class="table table-hover">
         <thead>
@@ -12,6 +12,7 @@
                 <th>Full Name</th>
                 <th>Address</th>
                 <th>Contact Number</th>
+                <th>Show</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -23,8 +24,13 @@
                 <td>{{$student->full_name}}</td>
                 <td>{{$student->address}}</td>
                 <td>{{$student->contact_no}}</td>
-                <td></td>
-                <td></td>
+                <td><a href="{{route('students.show',['id'=>$student->id])}}"><button class="btn btn-default">Show</button></a></td>
+                <td><a href="{{route('students.edit',['id'=>$student->id])}}"><button class="btn btn-primary">Edit</button></a></td>
+                <td><form method="POST" action="{{action('StudentController@destroy', $student->id)}}">
+                    @csrf
+                    <input name="_method" type="hidden" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form></td>
             </tr>
             @endforeach
         </tbody>
