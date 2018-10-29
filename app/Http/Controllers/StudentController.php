@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\student;
+use Illuminate\Support\Facades\Redirect;
 
 class StudentController extends Controller
 {
@@ -39,16 +40,15 @@ class StudentController extends Controller
         $request->validate([
             'full_name' => 'required|max:255',
             'address' => 'required|max:255',
-            'contact_no' => 'required|regex:/\d{10} ?/',
+            // 'contact_no' => 'required|regex:/\d{10} ?/',
+            'contact_no' => 'required|phone:IN',
         ]);
         $student = new student();
         $student->full_name = $request->full_name;
         $student->address = $request->address;
         $student->contact_no = $request->contact_no;
         $student->save();
-        if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator);
-        }
+       
         return redirect('/');
     }
 
@@ -60,7 +60,8 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $student = student::find($id);
+        return view('students.show',compact('student'));
     }
 
     /**
@@ -71,7 +72,8 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $student = student::find($id);
+        return view('students.edit',compact('student'));
     }
 
     /**
@@ -83,7 +85,19 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'full_name' => 'required|max:255',
+            'address' => 'required|max:255',
+            // 'contact_no' => 'required|regex:/\d{10} ?/',
+            'contact_no' => 'required|phone:IN',
+        ]);
+
+        $student = student::find($id);
+        $student->full_name = $request->full_name;
+        $student->address = $request->address;
+        $student->contact_no = $request->contact_no;
+        $student->save();
+        return redirect('students');
     }
 
     /**
@@ -94,6 +108,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = student::find($id);
+        $student->delete();
+        return redirect('students');
     }
 }

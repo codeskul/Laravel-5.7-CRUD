@@ -14,4 +14,4 @@
 // Route::get('/', function () {
 //     return view('students.index');
 // });
-Route::resource('', 'StudentController');
+Route::resource('students', 'StudentController');
